@@ -1,0 +1,12 @@
+package cloudinvoice.wildfire.repository;
+
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
+import cloudinvoice.wildfire.domain.Customer;
+
+public interface CustomerRepository extends CrudRepository<Customer, Long> {
+
+    List<Customer> findByLastName(String lastName);
+}
