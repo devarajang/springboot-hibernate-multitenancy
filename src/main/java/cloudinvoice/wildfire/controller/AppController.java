@@ -31,7 +31,7 @@ public class AppController {
     
     @PostMapping(path="/customers")
     public ResponseEntity<String> createCustomer(@RequestBody Map<String,String> requestMap) {
-    	Customer customer = new Customer(requestMap.get("firstName"), requestMap.get("lastName"));
+    	Customer customer = new Customer(requestMap.get("firstName"), requestMap.get("lastName"), requestMap.get("idnumber"));
     	custromerRepository.save(customer);
     	return new ResponseEntity<String>("Success", null, HttpStatus.CREATED);
     }

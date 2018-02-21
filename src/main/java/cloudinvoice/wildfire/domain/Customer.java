@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.ColumnTransformer;
+
 @Entity
 public class Customer {
 
@@ -12,20 +14,24 @@ public class Customer {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     private String firstName;
-    private String lastName;
+    private String lastName;    
+    
+    @ColumnTransformer(read = "aes_decrypt(from_base64(?),'12345678')", write = "to_base64(aes_encrypt(?,'12345678'))")
+    private String idnumber;
 
     protected Customer() {}
 
-    public Customer(String firstName, String lastName) {
+    public Customer(String firstName, String lastName,String idnumber) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.idnumber = idnumber;
     }
 
     @Override
     public String toString() {
         return String.format(
-                "Customer[id=%d, firstName='%s', lastName='%s']",
-                id, firstName, lastName);
+                "Customer[id=%d, firstName='%s', lastName='%s' , idnumber='%s']",
+                id, firstName, lastName,idnumber);
     }
 
 }
